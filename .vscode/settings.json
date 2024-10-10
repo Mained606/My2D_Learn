@@ -56,5 +56,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "My2D_Learn.sln"
+    "dotnet.defaultSolution": "My2D_Learn.sln",
+    "dotnet.preferCSharpExtension": true
 }
