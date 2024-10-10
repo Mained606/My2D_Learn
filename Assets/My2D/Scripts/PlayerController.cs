@@ -8,6 +8,7 @@ namespace My2D
         #region Variables
         private Rigidbody2D rb2D;
         private Animator animator;
+        // private SpriteRenderer spriteRenderer;
         //플레이어 걷기 속도
         public float walkSpeed = 4f;
         //플레이어 뛰기 속도
@@ -66,6 +67,41 @@ namespace My2D
                 animator.SetBool("isRunning", value);
             }
         }
+
+        //플레이어 점프 여부
+        [SerializeField] private bool _isJumping = false;
+        public bool IsJumping 
+        {
+            get
+            {
+                return _isJumping;
+            }
+            set
+            {
+                _isJumping = value;
+                animator.SetBool("isJumping", value);
+            }
+        }
+        //플레이어 좌우 방향 결정
+        public bool _isFacingRight = true;
+        public bool IsFacingRight 
+        { 
+            get
+            {
+                return _isFacingRight;
+            }
+        
+            private set
+            {
+                if(_isFacingRight != value)
+                {
+                    _isFacingRight = value;
+                    transform.localScale *= new Vector2(-1, 1);
+                }
+            }
+        }
+            
+
         //플레이어 점프 파워
         private float jumpForce = 5f;
 
@@ -76,6 +112,8 @@ namespace My2D
             //참조
             rb2D = this.GetComponent<Rigidbody2D>();
             animator = this.GetComponent<Animator>();
+
+            // spriteRenderer = this.GetComponent<SpriteRenderer>();
             //rb2D.velocity
         }
 
@@ -92,7 +130,29 @@ namespace My2D
             // Debug.Log("context : " + moveInput);
             //이동 여부 판단
             IsMoving = moveInput != Vector2.zero;
+
+            SetPlayerFlip(moveInput);
         }
+
+        //플레이어 좌우 방향 결정
+        public void SetPlayerFlip(Vector2 moveInput)
+        {
+            if(moveInput.x > 0 && !IsFacingRight)
+            {
+                IsFacingRight = true;
+                // Debug.Log("오른쪽");
+                // spriteRenderer.flipX = false;
+                
+            }
+            else if(moveInput.x < 0 && IsFacingRight)
+            {
+                IsFacingRight = false;
+                // Debug.Log("왼쪽");
+                // spriteRenderer.flipX = true;
+
+            }
+        }
+
 
 
          //달리기 구현
@@ -114,6 +174,12 @@ namespace My2D
             if (context.performed)
             {
                 rb2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+                IsJumping = true;
+            }
+            //점프 조건 수정 필요
+            else if(context.canceled/* 바닥에 착지했을 때 */)
+            {
+                IsJumping = false;
             }
         }
 
