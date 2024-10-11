@@ -1,3 +1,4 @@
+using My2d;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -50,7 +51,7 @@ namespace My2D
             set 
             {
                 _isMoving = value;
-                animator.SetBool("isMoving", value);
+                animator.SetBool(AnimationString.IsMoving, value);
             }
         }
         //플레이어 달리기 여부
@@ -64,26 +65,26 @@ namespace My2D
             set 
             {
                 _isRunning = value;
-                animator.SetBool("isRunning", value);
+                animator.SetBool(AnimationString.IsRunning, value);
             }
         }
 
-        //플레이어 점프 여부
-        [SerializeField] private bool _isJumping = false;
-        public bool IsJumping 
-        {
-            get
-            {
-                return _isJumping;
-            }
-            set
-            {
-                _isJumping = value;
-                animator.SetBool("isJumping", value);
-            }
-        }
+        // //플레이어 점프 여부
+        // [SerializeField] private bool _isJumping = false;
+        // public bool IsJumping 
+        // {
+        //     get
+        //     {
+        //         return _isJumping;
+        //     }
+        //     set
+        //     {
+        //         _isJumping = value;
+        //         animator.SetBool(AnimationString.IsJumping, value);
+        //     }
+        // }
         //플레이어 좌우 방향 결정
-        public bool _isFacingRight = true;
+        [SerializeField] private bool _isFacingRight = true;
         public bool IsFacingRight 
         { 
             get
@@ -95,8 +96,8 @@ namespace My2D
             {
                 if(_isFacingRight != value)
                 {
-                    _isFacingRight = value;
                     transform.localScale *= new Vector2(-1, 1);
+                    _isFacingRight = value;
                 }
             }
         }
@@ -168,20 +169,20 @@ namespace My2D
             }
         }
         
-        //점프 구현 - (무한 점프 수정 필요)
-        public void OnJump(InputAction.CallbackContext context)
-        {
-            if (context.performed)
-            {
-                rb2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-                IsJumping = true;
-            }
-            //점프 조건 수정 필요
-            else if(context.canceled/* 바닥에 착지했을 때 */)
-            {
-                IsJumping = false;
-            }
-        }
+        // //점프 구현 - (무한 점프 수정 필요)
+        // public void OnJump(InputAction.CallbackContext context)
+        // {
+        //     if (context.performed)
+        //     {
+        //         rb2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        //         IsJumping = true;
+        //     }
+        //     //점프 조건 수정 필요
+        //     else if(context.canceled/* 바닥에 착지했을 때 */)
+        //     {
+        //         IsJumping = false;
+        //     }
+        // }
 
         //마우스 클릭 테스트
         // public void OnMouseClick(InputAction.CallbackContext context)
