@@ -1,15 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace My2d
+namespace My2D
 {
-    //애니메이션 
+    // 애니메이션 관련 문자열 상수들을 정의하는 클래스
     public class AnimationString
     {
         public static string IsMoving = "isMoving";
         public static string IsRunning = "isRunning";
-        public static string IsJumping = "isJumping";
+        public static string IsGrounded = "isGrounded";
+        public static string yVelocity = "yVelocity";
+        public static string IsJumping = "JumpTrigger";
+        public static string IsOnWall = "isOnWall";
+        public static string IsOnCeiling = "isOnCeiling";
     }
-
 }

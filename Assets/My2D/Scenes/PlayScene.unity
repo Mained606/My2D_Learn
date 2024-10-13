@@ -4862,6 +4862,7 @@ GameObject:
   - component: {fileID: 508011650}
   - component: {fileID: 508011649}
   - component: {fileID: 508011652}
+  - component: {fileID: 508011653}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -5082,7 +5083,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 547c91cf-73fc-42bb-86c3-0d1c600576e5
+    m_ActionId: 95b8e516-e8d1-4646-9529-2825345fbde7
     m_ActionName: Player/Jump[/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
@@ -5103,9 +5104,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 4
   runSpeed: 8
+  jumpImpulse: 11
   _isMoving: 0
   _isRunning: 0
-  _isJumping: 0
   _isFacingRight: 1
 --- !u!70 &508011651
 CapsuleCollider2D:
@@ -5163,6 +5164,33 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &508011653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 508011645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 003aa5a0550014b29bae8c1f4a05e57c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  castFilter:
+    useTriggers: 0
+    useLayerMask: 0
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
+  groundDistance: 0.05
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -11116,7 +11144,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 14
-      m_TileSpriteIndex: 14
+      m_TileSpriteIndex: 16
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -12743,12 +12771,12 @@ Tilemap:
     m_Data: {fileID: -628826996, guid: be933a22587cda341bd0faad6009f42e, type: 3}
   - m_RefCount: 17
     m_Data: {fileID: -964500167, guid: be933a22587cda341bd0faad6009f42e, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 1
     m_Data: {fileID: -912233992, guid: be933a22587cda341bd0faad6009f42e, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
   - m_RefCount: 1
     m_Data: {fileID: -1554736787, guid: be933a22587cda341bd0faad6009f42e, type: 3}
   - m_RefCount: 37
