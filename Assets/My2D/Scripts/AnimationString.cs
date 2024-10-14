@@ -9,8 +9,10 @@ namespace My2D
         public static string IsRunning = "isRunning";
         public static string IsGrounded = "isGrounded";
         public static string yVelocity = "yVelocity";
-        public static string IsJumping = "JumpTrigger";
+        public static string JumpTrigger = "JumpTrigger";
         public static string IsOnWall = "isOnWall";
         public static string IsOnCeiling = "isOnCeiling";
+        public static string AttackTrigger = "AttackTrigger";
+        public static string CanMove = "CanMove";
     }
 }

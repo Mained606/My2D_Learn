@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
+using TMPro;
 
 namespace My2D
 {
@@ -19,6 +21,19 @@ namespace My2D
         // 플레이어 점프 파워
         public float jumpImpulse = 11f;
 
+        //이동 여부
+        public bool CanMove
+        {
+            get
+            {
+                return animator.GetBool(AnimationString.CanMove);
+            }
+            set
+            {
+                animator.SetBool(AnimationString.CanMove, value);
+            }
+        }
+
         // 플레이어 이동과 관련된 입력값
         private Vector2 moveInput;
 
@@ -30,22 +45,29 @@ namespace My2D
         {
             get
             {
-                if (IsMoving && !touchingDirections.IsOnWall)
+                if(CanMove)
                 {
-                    if(touchingDirections.IsGrounded)
+                    if (IsMoving && !touchingDirections.IsOnWall)
                     {
-                        return IsRunning ? runSpeed : walkSpeed;
+                        if(touchingDirections.IsGrounded)
+                        {
+                            return IsRunning ? runSpeed : walkSpeed;
+                        }
+                        else
+                        {
+                            return airSpeed;
+                        }
                     }
-                    else
-                    {
-                        return airSpeed;
-                    }
+                    return 0; // Idle 상태
                 }
-                return 0; // 정지
+                else
+                {
+                    return 0; //움직이지 못할 때
+                }
             }
         }
 
-
+        //플레이어 이동 여부
         [SerializeField] private bool _isMoving = false;
         public bool IsMoving 
         {
@@ -75,7 +97,7 @@ namespace My2D
             }
         }
 
-        // // 플레이어 점프 여부
+        // // 플레이어 점프 여부 - 실패
         // [SerializeField] private bool _isJumping = false;
         // public bool IsJumping 
         // {
@@ -107,6 +129,7 @@ namespace My2D
                 }
             }
         }
+
 
         #endregion
 
@@ -172,10 +195,126 @@ namespace My2D
             if(context.started && touchingDirections.IsGrounded)
             {
                 // 점프 애니메이션 실행
-                animator.SetTrigger(AnimationString.IsJumping);
+                animator.SetTrigger(AnimationString.JumpTrigger);
                 rb2D.velocity = new Vector2(rb2D.velocity.x, jumpImpulse);
             }
         }
+
+        // 공격 구현
+        public void OnAttack(InputAction.CallbackContext context)
+        {
+            if(context.started && touchingDirections.IsGrounded)
+            {
+                // 공격 애니메이션 실행
+                animator.SetTrigger(AnimationString.AttackTrigger);
+
+                // 공격 로직
+
+            }
+        }
+
+        // ======================================================================================
+
+
+        // 공격 구현(실패) - 3
+        // public void OnAttack(InputAction.CallbackContext context)
+        // {
+        //     if(context.started)
+        //     {
+        //         StartCoroutine(Attack());
+        //     }
+        // }
+
+        // IEnumerator Attack()
+        // {
+        //     animator.SetTrigger(AnimationString.AttackTrigger);
+        //     animator.SetBool("EndAttack", true);
+        //     float comboTime = 2f;
+
+        //     if(comboTime >= 0)
+        //     {
+        //         if(Input.GetMouseButtonDown(0))
+        //         {
+        //             animator.SetBool("EndAttack", false);
+        //         }
+        //         else
+        //         {
+        //             animator.SetBool("EndAttack", true);
+        //         }
+        //     }
+        //     else
+        //     {
+        //         animator.SetBool("EndAttack", true);
+
+        //     }
+        //     comboTime -= Time.deltaTime;
+
+        //     yield return null;
+        // }
+
+        // 공격 구현(실패) - 2
+        // public void OnAttack(InputAction.CallbackContext context)
+        // {
+        //     if(context.started)
+        //     {
+        //         animator.SetTrigger(AnimationString.AttackTrigger);
+        //         StartCoroutine(SecondAttack());
+        //     }
+
+        //     if(context.canceled)
+        //     {
+        //         animator.ResetTrigger(AnimationString.AttackTrigger);
+        //     }
+        // }
+
+        // IEnumerator SecondAttack()
+        // {
+        //     if(Input.GetMouseButtonDown(0))
+        //     {
+        //         animator.SetBool("EndAttack", false);
+        //         yield return new WaitForSeconds(0.5f);
+        //         animator.SetBool("EndAttack", true);
+        //     }
+        //     else
+        //     {
+        //         animator.SetBool("EndAttack", true);
+        //         yield return null;
+        //     }
+        // }
+
+
+
+        // 공격 구현(실패) - 1
+        // public void OnAttack(InputAction.CallbackContext context)
+        // {
+        //     if(context.started)
+        //     {
+        //         animator.SetTrigger(AnimationString.AttackTrigger);
+
+        //         if(context.started)
+        //         {
+        //             animator.SetTrigger("STrigger");
+
+        //             if(context.started)
+        //             {
+        //                 animator.SetTrigger("TTrigger");
+        //                 animator.ResetTrigger("TTrigger");
+        //                 animator.SetBool("AttackCheck", false);
+        //             }
+        //             else
+        //             {
+        //                 animator.SetBool("AttackCheck", false);
+        //                 animator.ResetTrigger("STrigger");
+        //             }
+        //         }
+        //         else
+        //         {
+        //             animator.SetBool("AttackCheck", false);
+        //             animator.ResetTrigger(AnimationString.AttackTrigger);
+        //         }
+        //     }
+ 
+        // }
         
         // // 점프 구현 - (무한 점프 수정 필요)
         // public void OnJump(InputAction.CallbackContext context)
