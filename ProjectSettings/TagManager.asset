@@ -8,14 +8,14 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Ground
+  - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Ground
+  - Player
+  - Enemy
+  - PlayerHitBox
+  - EnemyHitBox
   - 
   - 
   - 
@@ -43,6 +43,12 @@ TagManager:
     locked: 0
   - name: TileMap
     uniqueID: 140830607
+    locked: 0
+  - name: Enemy
+    uniqueID: 2908554635
+    locked: 0
+  - name: Player
+    uniqueID: 1436644305
     locked: 0
   - name: Default
     uniqueID: 0

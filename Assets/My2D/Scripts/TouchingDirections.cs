@@ -4,19 +4,19 @@ namespace My2D
     public class TouchingDirections : MonoBehaviour
     {
         #region Variables
-        // 2D 물리 충돌을 감지하기 위한 필터
-        public ContactFilter2D castFilter;
-        
-        // 바닥, 벽, 천장과의 거리 설정
-        public float groundDistance = 0.05f;
-        public float wallDistance = 0.2f;
-        public float ceilingDistance = 0.05f;
-        
         // 충돌을 감지할 캡슐 콜라이더
-        CapsuleCollider2D touchingCol;
-        
+        private CapsuleCollider2D touchingCol;
         // 애니메이터 컴포넌트
         Animator animator;
+        // 2D 물리 충돌을 감지하기 위한 필터
+        [SerializeField] private ContactFilter2D castFilter;
+        
+        // 바닥, 벽, 천장과의 거리 설정
+        [SerializeField] private float groundDistance = 0.05f;
+        [SerializeField] private float wallDistance = 0.2f;
+        [SerializeField] private float ceilingDistance = 0.05f;
+        
+        
 
         // 충돌 감지를 위한 RaycastHit2D 배열
         RaycastHit2D[] groundHits = new RaycastHit2D[5];
@@ -24,7 +24,7 @@ namespace My2D
         RaycastHit2D[] ceilingHits = new RaycastHit2D[5];
 
         // 바닥에 닿아 있는지 여부
-        private bool _isGrounded;
+        [SerializeField] private bool _isGrounded;
         public bool IsGrounded 
         { 
             get => _isGrounded; 
@@ -37,7 +37,7 @@ namespace My2D
         }
 
         // 벽에 닿아 있는지 여부
-        private bool _isOnWall;
+        [SerializeField] private bool _isOnWall;
         public bool IsOnWall 
         { 
             get => _isOnWall; 
@@ -50,7 +50,7 @@ namespace My2D
         }
 
         // 천장에 닿아 있는지 여부
-        private bool _isOnCeiling;
+        [SerializeField] private bool _isOnCeiling;
         public bool IsOnCeiling 
         { 
             get => _isOnCeiling; 

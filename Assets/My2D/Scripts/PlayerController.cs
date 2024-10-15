@@ -1,7 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System.Collections;
-using TMPro;
 
 namespace My2D
 {
@@ -10,6 +8,8 @@ namespace My2D
         #region Variables
         private Rigidbody2D rb2D;
         private Animator animator;
+        // 플레이어 바닥 확인
+        TouchingDirections touchingDirections;
         // private SpriteRenderer spriteRenderer;
 
         // 플레이어 걷기 속도
@@ -28,17 +28,11 @@ namespace My2D
             {
                 return animator.GetBool(AnimationString.CanMove);
             }
-            set
-            {
-                animator.SetBool(AnimationString.CanMove, value);
-            }
         }
 
         // 플레이어 이동과 관련된 입력값
         private Vector2 moveInput;
 
-        // 플레이어 바닥 확인
-        TouchingDirections touchingDirections;
 
         // 플레이어 상태에 따라 이동속도 변경
         public float CurrentMoveSpeed
@@ -129,7 +123,6 @@ namespace My2D
                 }
             }
         }
-
 
         #endregion
 
