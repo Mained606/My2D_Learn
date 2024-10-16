@@ -124,6 +124,14 @@ namespace My2D
             }
         }
 
+        public bool IsDead
+        {
+            get
+            {
+                return animator.GetBool(AnimationString.IsDead);
+            }
+        }
+
         #endregion
 
         void Awake()
@@ -146,10 +154,18 @@ namespace My2D
         public void OnMove(InputAction.CallbackContext context)
         {
             moveInput = context.ReadValue<Vector2>();
+
+            if(IsDead)
+            {
+                IsMoving = false;
+            }
+            else
+            {
+                // 이동 여부 판단
+                IsMoving = moveInput != Vector2.zero;
+                SetPlayerFlip(moveInput);
+            }
             // Debug.Log("context : " + moveInput);
-            // 이동 여부 판단
-            IsMoving = moveInput != Vector2.zero;
-            SetPlayerFlip(moveInput);
         }
 
         // 플레이어 좌우 방향 결정

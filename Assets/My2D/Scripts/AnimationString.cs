@@ -10,9 +10,11 @@ namespace My2D
         public static string IsGrounded = "isGrounded";
         public static string IsOnWall = "isOnWall";
         public static string IsOnCeiling = "isOnCeiling";
+        public static string IsDead = "isDead";
         public static string HasTarget = "HasTarget";
         public static string JumpTrigger = "JumpTrigger";
         public static string AttackTrigger = "AttackTrigger";
+        public static string HitTrigger = "HitTrigger";
         public static string yVelocity = "yVelocity";
         public static string CanMove = "CanMove";
     }
