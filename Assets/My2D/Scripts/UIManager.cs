@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using JetBrains.Annotations;
 
 namespace My2D
 {
@@ -14,6 +15,7 @@ namespace My2D
         [SerializeField] private Vector3 healthOffset = Vector3.zero;
 
         public float health;
+        public float currentHealth;
         
         #endregion
 
@@ -53,8 +55,17 @@ namespace My2D
             GameObject textGO = Instantiate(healthTextPrefab, spawnPosition + healthOffset, Quaternion.identity, canvas.transform);
             TextMeshProUGUI healthText = textGO.GetComponent<TextMeshProUGUI>();
             
-            healthText.text = amount.ToString();
+            //2024-10-17 수정
+            healthText.text = currentHealth.ToString();
         }   
+
+        //2024-10-17 추가
+        // 현재 체력 회복량 받아오기
+        public void GetCurrentHealth(float amount)
+        {
+            currentHealth = amount;
+            Debug.Log("받아온 체력값: "+ currentHealth);
+        }
 
     }
 }

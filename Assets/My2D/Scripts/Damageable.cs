@@ -9,6 +9,7 @@ namespace My2D
     {
         #region Variables
         private Animator animator;
+        private UIManager uiManager;
 
         //델리게이트
         //등록된 함수를 호출하는 이벤트
@@ -67,6 +68,7 @@ namespace My2D
         void Awake()
         {
             animator = GetComponent<Animator>();
+            uiManager = FindObjectOfType<UIManager>();
 
         }
         
@@ -118,6 +120,18 @@ namespace My2D
             if(CurrentHealth >= MaxHealth)
             {
                 return false;
+            }
+
+            //2024-10-17 추가
+            // 받은 힐링값이 최대 체력 - 현재 체력보다 크면 최대 체력 - 현재 체력을 매개변수로 보내줌
+            if(MaxHealth - CurrentHealth < amount)
+            {
+                uiManager.GetCurrentHealth(MaxHealth - CurrentHealth);
+            }
+            // 받은 힐링값이 최대 체력 - 현재 체력보다 작으면 받은 힐링값을 매개변수로 보내줌
+            else
+            {
+                uiManager.GetCurrentHealth(amount);
             }
             
             CurrentHealth += amount;
