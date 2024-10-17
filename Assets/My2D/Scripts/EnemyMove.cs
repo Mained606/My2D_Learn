@@ -8,12 +8,15 @@ namespace My2D
 {
     public class EnemyMove : MonoBehaviour
     {
+        #region Variables
         // 컴포넌트
         private Rigidbody2D rb2D;
         private Animator animator;
         private TouchingDirections touchingDirections;
         //플레이어 감지
         public DetectionZone detectionZone;
+        //낭떨어지 감지
+        public DetectionZone detectionCliff;
         // 변수
         [SerializeField] private float runSpeed = 4f;
         //감속 계수
@@ -65,12 +68,19 @@ namespace My2D
             get { return animator.GetBool(AnimationString.CanMove); }
         }
 
+        private Damageable damageable;
+        #endregion
 
         void Awake()
         {
             rb2D = GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
             touchingDirections = this.GetComponent<TouchingDirections>();
+            
+            damageable = this.GetComponent<Damageable>();
+            damageable.hitAction += OnHit;
+
+            detectionCliff.noCollider += OnCliffDetection;
         }
         void Update()
         {
@@ -90,14 +100,18 @@ namespace My2D
                 //방향 전환 반전
                 Flip();
             }
-            if(CanMove)
+
+            if(!damageable.LockVelocity)
             {
-                rb2D.velocity = new Vector2(directionVector.x * runSpeed, rb2D.velocity.y);
-            }
-            else
-            {
-                //rb2D.velocity.x -> 0 : Lerp
-                rb2D.velocity = new Vector2(Mathf.Lerp(rb2D.velocity.x, 0f, stopRate), rb2D.velocity.y);
+                if(CanMove)
+                {
+                    rb2D.velocity = new Vector2(directionVector.x * runSpeed, rb2D.velocity.y);
+                }
+                else
+                {
+                    //rb2D.velocity.x -> 0 : Lerp
+                    rb2D.velocity = new Vector2(Mathf.Lerp(rb2D.velocity.x, 0f, stopRate), rb2D.velocity.y);
+                }
             }
         }
 
@@ -115,6 +129,18 @@ namespace My2D
             else
             {
                 Debug.LogError("Invalid direction");
+            }
+        }
+        public void OnHit(float damage, Vector2 knockback)
+        {
+            rb2D.velocity = new Vector2(knockback.x, rb2D.velocity.y + knockback.y);
+        }
+
+        public void OnCliffDetection()
+        {
+            if(touchingDirections.IsGrounded)
+            {
+                Flip();
             }
         }
 

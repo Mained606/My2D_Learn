@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 namespace My2D
 {
@@ -10,6 +11,7 @@ namespace My2D
         private Animator animator;
         // 플레이어 바닥 확인
         TouchingDirections touchingDirections;
+        private Damageable damageable;
         // private SpriteRenderer spriteRenderer;
 
         // 플레이어 걷기 속도
@@ -140,13 +142,18 @@ namespace My2D
             rb2D = this.GetComponent<Rigidbody2D>();
             animator = this.GetComponent<Animator>();
             touchingDirections = this.GetComponent<TouchingDirections>();
+            damageable = this.GetComponent<Damageable>();
+            damageable.hitAction += OnHit; //데미지 입었을 때 호출되는 함수
             // spriteRenderer = this.GetComponent<SpriteRenderer>();
         }
 
         void FixedUpdate()
         {   
-            // 좌우 이동
-            rb2D.velocity = new Vector2(moveInput.x * CurrentMoveSpeed, rb2D.velocity.y);
+            if(!damageable.LockVelocity)
+            {
+                // 좌우 이동
+                rb2D.velocity = new Vector2(moveInput.x * CurrentMoveSpeed, rb2D.velocity.y);
+            }
             animator.SetFloat(AnimationString.yVelocity, rb2D.velocity.y);
         }
 
@@ -220,6 +227,11 @@ namespace My2D
                 // 공격 로직
 
             }
+        }
+
+        public void OnHit(float damage, Vector2 knockback)
+        {
+            rb2D.velocity = new Vector2(knockback.x, rb2D.velocity.y + knockback.y);
         }
 
         // ======================================================================================

@@ -17,5 +17,6 @@ namespace My2D
         public static string HitTrigger = "HitTrigger";
         public static string yVelocity = "yVelocity";
         public static string CanMove = "CanMove";
+        public static string LockVelocity = "LockVelocity";
     }
 }
