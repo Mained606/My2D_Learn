@@ -55,17 +55,19 @@ namespace My2D
             GameObject textGO = Instantiate(healthTextPrefab, spawnPosition + healthOffset, Quaternion.identity, canvas.transform);
             TextMeshProUGUI healthText = textGO.GetComponent<TextMeshProUGUI>();
             
-            //2024-10-17 수정
-            healthText.text = currentHealth.ToString();
-        }   
+            healthText.text = amount.ToString();
+            ////2024-10-17 수정
+            //healthText.text = currentHealth.ToString();
 
-        //2024-10-17 추가
-        // 현재 체력 회복량 받아오기
-        public void GetCurrentHealth(float amount)
-        {
-            currentHealth = amount;
-            Debug.Log("받아온 체력값: "+ currentHealth);
         }
+
+        ////2024-10-17 추가
+        //// 현재 체력 회복량 받아오기
+        //public void GetCurrentHealth(float amount)
+        //{
+        //    currentHealth = amount;
+        //    Debug.Log("받아온 체력값: "+ currentHealth);
+        //}
 
     }
 }

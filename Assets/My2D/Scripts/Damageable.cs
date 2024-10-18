@@ -96,19 +96,24 @@ namespace My2D
             if(!IsDead && !isInvincible)
             {
                 isInvincible = true;
+
+                //데미지 전의 hp
+                float beforeHealth = CurrentHealth;
                 
                 //체력 감소
                 CurrentHealth -= damage;
                 Debug.Log(transform.name + " : " + CurrentHealth);
-
-                //입은 데미지 텍스트 전달
-
 
                 //애니메이션 트리거 실행
                 animator.SetTrigger(AnimationString.HitTrigger);
 
                 //데미지 효과
                 hitAction?.Invoke(damage, knockback);
+
+
+                float realDamage = beforeHealth - CurrentHealth;
+
+
                 CharacterEvents.characterDamaged?.Invoke(gameObject, damage);
             }
         }
@@ -122,24 +127,30 @@ namespace My2D
                 return false;
             }
 
-            //2024-10-17 추가
-            // 받은 힐링값이 최대 체력 - 현재 체력보다 크면 최대 체력 - 현재 체력을 매개변수로 보내줌
-            if(MaxHealth - CurrentHealth < amount)
-            {
-                uiManager.GetCurrentHealth(MaxHealth - CurrentHealth);
-            }
-            // 받은 힐링값이 최대 체력 - 현재 체력보다 작으면 받은 힐링값을 매개변수로 보내줌
-            else
-            {
-                uiManager.GetCurrentHealth(amount);
-            }
+            //힐 전의 hp
+            float beforeHealth = CurrentHealth;
             
             CurrentHealth += amount;
             CurrentHealth = Mathf.Clamp(CurrentHealth, 0, MaxHealth);
 
+            //실제 힐 hp 값
+            float realHealth = CurrentHealth - beforeHealth;
+
+            ////2024-10-17 추가
+            //// 받은 힐링값이 최대 체력 - 현재 체력보다 크면 최대 체력 - 현재 체력을 매개변수로 보내줌
+            //if(MaxHealth - CurrentHealth < amount)
+            //{
+            //    uiManager.GetCurrentHealth(MaxHealth - CurrentHealth);
+            //}
+            //// 받은 힐링값이 최대 체력 - 현재 체력보다 작으면 받은 힐링값을 매개변수로 보내줌
+            //else
+            //{
+            //    uiManager.GetCurrentHealth(amount);
+            //}
+
 
             //체력 회복 이벤트 발생
-            CharacterEvents.characterHealed?.Invoke(gameObject, amount);
+            CharacterEvents.characterHealed?.Invoke(gameObject, realHealth);
             
             return true;
         }

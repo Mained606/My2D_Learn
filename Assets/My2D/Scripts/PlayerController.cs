@@ -19,7 +19,7 @@ namespace My2D
         // 플레이어 뛰기 속도
         public float runSpeed = 8f;
         // 플레이어 공중 이동 속도
-        public float airSpeed = 3f;
+        public float airSpeed = 5f;
         // 플레이어 점프 파워
         public float jumpImpulse = 11f;
 
@@ -223,6 +223,18 @@ namespace My2D
             {
                 // 공격 애니메이션 실행
                 animator.SetTrigger(AnimationString.AttackTrigger);
+
+                // 공격 로직
+
+            }
+        }
+
+        public void OnBowAttack(InputAction.CallbackContext context)
+        {
+            if (context.started && touchingDirections.IsGrounded)
+            {
+                // 공격 애니메이션 실행
+                animator.SetTrigger(AnimationString.BowTrigger);
 
                 // 공격 로직
 
