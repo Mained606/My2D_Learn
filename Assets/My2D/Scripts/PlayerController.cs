@@ -12,6 +12,7 @@ namespace My2D
         // 플레이어 바닥 확인
         TouchingDirections touchingDirections;
         private Damageable damageable;
+        private TrailEffect trailEffect;
         // private SpriteRenderer spriteRenderer;
 
         // 플레이어 걷기 속도
@@ -143,6 +144,7 @@ namespace My2D
             animator = this.GetComponent<Animator>();
             touchingDirections = this.GetComponent<TouchingDirections>();
             damageable = this.GetComponent<Damageable>();
+            trailEffect = this.GetComponent<TrailEffect>();
             damageable.hitAction += OnHit; //데미지 입었을 때 호출되는 함수
             // spriteRenderer = this.GetComponent<SpriteRenderer>();
         }
@@ -203,6 +205,12 @@ namespace My2D
             {
                 IsRunning = false;
             }
+
+            //고스트 효과 적용
+            if(trailEffect != null)
+            {
+                trailEffect.StartActiveTrail();
+            }
         }
 
         public void OnJump(InputAction.CallbackContext context)
@@ -213,6 +221,11 @@ namespace My2D
                 // 점프 애니메이션 실행
                 animator.SetTrigger(AnimationString.JumpTrigger);
                 rb2D.velocity = new Vector2(rb2D.velocity.x, jumpImpulse);
+
+                // if(trailEffect != null)
+                // {
+                //     trailEffect.StartActiveTrail();
+                // }
             }
         }
 
